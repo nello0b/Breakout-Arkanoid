@@ -1,6 +1,6 @@
 # Breakout Arkanoid
 
-A Java implementation of a classic Breakout/Arkanoid-style arcade game. The project uses the biuoop framework to render the game window and handle input while providing multiple handcrafted levels, scoring, and pause/game-over screens.
+A Java implementation of a classic Breakout/Arkanoid-style arcade game.
 
 <img width="797" height="627" alt="image" src="https://github.com/user-attachments/assets/9e74cccd-8a1a-4712-a2a0-8c343aa8446f" />
 
