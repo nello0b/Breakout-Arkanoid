@@ -1,0 +1,37 @@
+# Compiled class files
+*.class
+
+# Build output directories
+out/
+build/
+bin/
+target/
+dist/
+
+# Package archives
+*.jar
+*.war
+*.ear
+!biuoop-1.4.jar
+
+# Logs and temp files
+*.log
+*.tmp
+*.swp
+*.swo
+*~
+
+# IDE configuration
+.idea/
+*.iml
+.classpath
+.project
+.settings/
+
+# OS-generated files
+.DS_Store
+Thumbs.db
+
+# JVM crash logs
+hs_err_pid*
+replay_pid*
