@@ -3,6 +3,7 @@
 
 import biuoop.DrawSurface;
 import biuoop.KeyboardSensor;
+import Geometry.Velocity;
 
 /**
  * Name: Game Class
@@ -24,6 +25,8 @@ public class GameLevel implements Animation {
     private final KeyboardSensor keyboard;
 
     private boolean running;
+
+    private boolean cheatAlreadyPressed;
 
     /**
      * Name: GameLevel
@@ -193,6 +196,14 @@ public class GameLevel implements Animation {
         getSprites().drawAllOn(d);
         // move everything
         getSprites().notifyAllTimePassed();
+        if (this.keyboard.isPressed("q")) {
+            if (!this.cheatAlreadyPressed) {
+                activateCheatBalls();
+            }
+            this.cheatAlreadyPressed = true;
+        } else {
+            this.cheatAlreadyPressed = false;
+        }
         //pose the game
         if (this.keyboard.isPressed("p")) {
             this.runner.run(new KeyPressStoppableAnimation(this.keyboard, KeyboardSensor.SPACE_KEY, new PauseScreen()));
@@ -215,5 +226,36 @@ public class GameLevel implements Animation {
      */
     public boolean shouldStop() {
         return !this.running;
+    }
+
+    /**
+     * Name: activateCheatBalls
+     * Description: spawn additional balls with different starting angles.
+     */
+    private void activateCheatBalls() {
+        int ballsToCreate = 10;
+        int angle = Configuration.OPENING_ANGLE;
+        double angleD = (double) (2 * angle) / (ballsToCreate - 1);
+        double speed = Configuration.DEFAULT_SPEED / 2.0;
+        int radius = Configuration.BALL_RADIUS;
+        double x = (double) Configuration.SCREEN_WIDTH / 2;
+        double y = Configuration.SCREEN_HIGHT - Configuration.BOARDER_SIZE * 2 - radius;
+        for (int i = 0; i < ballsToCreate; i++) {
+            Ball ball = new Ball(x, y, radius, Configuration.BALL_COLOR);
+            ball.setVelocity(Velocity.fromAngleAndSpeed(angle - (angleD * i), speed));
+            addBallToGame(ball);
+        }
+    }
+
+    /**
+     * Name: addBallToGame
+     * Description: add a ball to the current running game and update counters.
+     *
+     * @param ball the ball we want to add.
+     */
+    private void addBallToGame(Ball ball) {
+        ball.setGameEnvironment(getEnvironment());
+        addSprite(ball);
+        getBallsCounter().increase(1);
     }
 }
