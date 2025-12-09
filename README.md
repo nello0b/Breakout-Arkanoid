@@ -15,6 +15,7 @@ A Java implementation of a classic Breakout/Arkanoid-style arcade game. The proj
 ## Controls
 - **Left / Right arrows**: Move the paddle horizontally.
 - **P**: Pause the game.
+- **Q**: Spawn a spread of extra balls (cheat code) to clear blocks quickly.
 
 ## Building and Running
 Requirements:
@@ -43,3 +44,14 @@ If no valid level numbers are provided, the default order is used.
 - `src/` – Game source code (animations, sprites, levels, and utilities)
 - `build.xml` – Ant build script with targets for compiling and running the game
 - `biuoop-1.4.jar` – Rendering and input dependency packaged with the project
+
+## Architecture overview
+- **Animation loop**: `AnimationRunner` advances the game at a fixed frames-per-second rate by repeatedly calling
+  the active animation's `doOneFrame` until `shouldStop` returns true.
+- **Sprites and collidables**: Moving objects implement `Sprite`, while solid objects implement `Collidable`. The
+  `SpriteCollection` and `GameEnvironment` track these objects and handle drawing and collision detection.
+- **Levels**: Each level implements `LevelInformation` to describe its blocks, backgrounds, balls, and paddle
+  settings. `GameFlow` iterates through the configured levels, while `GameLevel` manages the objects and logic for a
+  single stage.
+- **Input and game states**: Keyboard input is supplied by `KeyboardSensor` from the biuoop library. Convenience
+  animations (pause screen, countdown, and end screens) wrap the core game loop to provide smooth transitions.
